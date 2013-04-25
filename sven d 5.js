@@ -3,11 +3,6 @@
 //if its class is called Robot
 var Robot = function(robot) {
     robot.clone();
-   
-    //robot.ignore('onScannedRobot');
-    //logObj(robot, robot);
-    //robot.rotateCannon(360);
-    //logPos(robot);
 };
 Robot.to = 0;
 Robot.toClone = 1;
@@ -21,7 +16,6 @@ function toLeft(amount) {
   var r = ev.robot;
   r.turn(270-r.angle);
   r.ahead(amount);
-  //r.turnGunRight( -r.cannonRelativeAngle);
 };
 function toRight(amount) {
   var ev = Robot.ev;
@@ -69,7 +63,6 @@ Robot.prototype.onIdle = function(ev) {
    r.rotateCannon(45);
    var direct = Math.random()*4^0;
   r.parentId? Robot.toClone = direct: Robot.to = direct;
-   //Robot.to = direct;//Robot.to < 3 ? Robot.to + 1 : 0;
 };
 function cloneIdle(robot){
    logPos(robot);
@@ -86,28 +79,17 @@ Robot.prototype.onScannedRobot = function(ev) {
   var cln = robot.parentId ? 1 : -1;
   if( (ev.scannedRobot.parentId == robot.id) || (ev.scannedRobot.id == robot.parentId) ) {
     return;
-  }; /* 
-  if( ev.scannedRobot.parentId ) { 
-    //return;
   };
-  */
-    //robot.fire(); 
     robot.rotateCannon(cln*2);
     robot.fire();
     robot.ahead(cln*10);
     robot.turn(cln*15);
     robot.rotateCannon(cln*(-20));
-    //robot.ahead(cln*15);
-    //robot.rotateCannon(-20);
-  //robot.fire();
 };
 Robot.prototype.onHitByBullet = function(ev) {
   var robot = ev.robot;
-  //alert(ev.bearing);
+
   robot.disappear();
-  
-  //robot.rotateCannon(ev.bearing);
-  robot.fire();
 };
 Robot.prototype.onWallCollision = function(ev) {
   var  r = ev.robot;
@@ -117,16 +99,12 @@ Robot.prototype.onWallCollision = function(ev) {
   } else {
     Robot.toClone = Robot.toClone < 3 ? Robot.toClone + 1 : 0; 
   }
-  robot.trun(ev.bearing +15);//
-  /*
-  var robot = ev.robot;
-  robot.trun(90 - ev.bearing);
-  robot.back(50);
-  */
+  robot.trun(ev.bearing +15);
+  
 };
 Robot.prototype.onRobotCollision = function(ev) {
   var robot = ev.robot;
   Robot.to = Robot.to < 3 ? Robot.to + 1 : 0;
   robot.trun(ev.bearing + 20);
- // robot.back(30);
+ 
 };
